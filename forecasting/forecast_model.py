@@ -7,11 +7,7 @@ from sklearn.metrics import mean_absolute_error, mean_squared_error
 
 def forecast_stock(data, n_periods, model_type='best'):
     # Prepare the data (Ensure that df has only 'ds' and 'y')
-    print("Type of n_periods (inside forecast_stock):", type(n_periods))  # Should be <class 'int'>
-    print("Value of n_periods (inside forecast_stock):", n_periods)
     df = data[['Date', 'Close']].rename(columns={'Date': 'ds', 'Close': 'y'})
-    df['ds'] = pd.to_datetime(df['ds'])
-    print("Type of df['ds']:", df['ds'].dtype) # Should be datetime64[ns]
     
 
     # Function to calculate error metrics
@@ -34,9 +30,6 @@ def forecast_stock(data, n_periods, model_type='best'):
         )
         model.fit(df)
         print("Dataframe to fit model:", df.head())
-
-        # Check if periods is being passed correctly
-        print(f"Periods passed to make_future_dataframe: {n_periods}")
 
         # Generate future dataframe for prediction (Ensure periods argument is passed correctly)
         future = model.make_future_dataframe(df, periods=n_periods)  # Only passing 'periods' here
